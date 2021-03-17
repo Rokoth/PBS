@@ -1,0 +1,24 @@
+﻿@using ProjectBranchSelector.Models;
+@model IEnumerable<FormulaModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(s => s.Name)</th>
+            <th>@Html.DisplayNameFor(s => s.Text)</th>
+            <th>@Html.DisplayNameFor(s => s.IsDefault)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Text</td>
+                <td>@item.IsDefault</td>
+                <td><a href="#" onclick="setFormula(@item.Id, @item.Name);">Выбрать</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

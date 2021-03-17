@@ -1,0 +1,30 @@
+﻿@using ProjectBranchSelector.Models;
+@model FormulaModel
+@{
+    ViewData["Title"] = "Формула";
+}
+
+<div class="container">
+    <h4>@ViewData["Title"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+      
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Редактировать", "Edit", new { id = Model.Id }, new { @class = "btn btn-dark" }) |
+    @Html.ActionLink("Просмотр формулы", "Index", "Details", new { id = Model.Id }, new { @class = "btn btn-dark" }) |
+    @Html.ActionLink("История", "Index", "History", new { id = Model.Id }, new { @class = "btn btn-dark" }) |    
+    <a asp-action="Index" asp-controller="Home">Вернуться</a>
+</div>
+
+@section Scripts {
+    <script src="~/js/project_details.js" asp-append-version="true"></script>
+
+}

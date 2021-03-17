@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ProjectBranchSelector.Models.TreeItemHistoryModel>
+
+@{
+    ViewData["Title"] = "История изменений";
+}
+
+<h1>List</h1>
+
+<p>   
+    <a href='javascript:history.go(-1)'>Вернуться</a>
+</p>
+
+@foreach (var item in Model.Where(s => s.ParentId == null))
+{
+<li style="margin-top:4px;padding:0px;">
+    @Html.HiddenFor(m => item.Id)
+    @Html.LabelFor(m => item.Name, item.Name)
+    @Html.LabelFor(m => item.Description, item.Description)  
+    
+</li>
+}
+
+

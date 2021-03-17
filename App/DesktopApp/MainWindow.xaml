@@ -1,0 +1,77 @@
+﻿<Window x:Class="DesktopApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1024" Loaded="Window_Loaded" BorderThickness="1">
+    <Grid Margin="5,5,5,5">
+        <DataGrid x:Name="DataGridMain" HorizontalAlignment="Stretch" Margin="0,83,0,40" VerticalAlignment="Stretch" SelectionChanged="DataGridMain_SelectionChanged" Loaded="DataGridMain_Loaded">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="Name" Header="Наименование" Binding="{Binding Path=Name}"/>
+                <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Path=Description}"/>
+                <DataGridTextColumn x:Name="Formula" Header="Формула" Binding="{Binding Path=Formula}"/>
+                <DataGridTextColumn x:Name="Id" Header="Id" Visibility="Hidden" Binding="{Binding Path=Id}"/>
+                <DataGridTextColumn x:Name="FormulaId" Header="FormulaId" Visibility="Hidden" Binding="{Binding Path=FormulaId}"/>
+            </DataGrid.Columns>
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <EventSetter Event="PreviewMouseDown" Handler="DataGridCell_PreviewMouseDown"/>
+                </Style>
+            </DataGrid.CellStyle>
+        </DataGrid>
+        <Menu HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Top">
+            <MenuItem x:Name="File" Header="Файл" Height="24" Margin="0" Width="48">
+                <MenuItem x:Name="ServerConnectMenuItem" Header="Подключиться к серверу..." Click="ServerConnect_Click"/>
+                <MenuItem x:Name="SyncConflictsMenuItem" Header="Конфликты сихронизации" Click="SyncConflicts_Click"/>
+                <Separator/>
+                <MenuItem x:Name="AddTreeMenuItem" Header="Добавить дерево" Click="AddTreeMenuItem_Click"/>
+                <MenuItem x:Name="ImportTreeMenuItem" Header="Импорт из файла" Click="ImportTreeMenuItem_Click"/>
+                <MenuItem x:Name="ExportToFileMenuItem" Header="Экспортировать в файл" Click="ExportToFileMenuItem_Click"/>
+                <Separator/>
+                <MenuItem x:Name="CloseMenuItem" Header="Выход" Click="CloseMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="Window" Header="Окно" Height="24" Margin="0" Width="48">
+                <MenuItem x:Name="TreeModeMenuItem" Header="Дерево" Click="TreeModeMenuItem_Click"/>
+                <MenuItem x:Name="FormulaModeMenuItem" Header="Формула" Click="FormulaModeMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem x:Name="Help" Header="Помощь" Height="24" Margin="0" Width="60">
+                <MenuItem x:Name="AboutMenuItem" Header="О программе" Click="AboutMenuItem_Click"/>
+                <MenuItem x:Name="ErrorMenuItem" Header="Сообщить об ошибке" Click="ErrorMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+        <Button x:Name="CloseButton" Content="Закрыть" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="75" Click="CloseButton_Click"/>
+        <Button x:Name="RefreshButton" Content="Обновить" HorizontalAlignment="Right" Margin="0,0,85,5" VerticalAlignment="Bottom" Width="75" Click="RefreshButton_Click"/>
+        <Button Content="Button" HorizontalAlignment="Right" Margin="0,0,165,5" VerticalAlignment="Bottom" Width="75"/>
+        <Grid HorizontalAlignment="Stretch" Height="30" Margin="0,24,0,0" VerticalAlignment="Top" Width="1004">
+            <Button x:Name="RefreshButton2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="0,0,0,0" Click="RefreshButton2_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="icons/refresh.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />                    
+                </StackPanel>
+            </Button>
+            <Button x:Name="AddButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="30,0,0,0" Click="AddTreeMenuItem_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="icons/add.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </StackPanel>
+            </Button>
+            <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="60,0,0,0"/>            
+        </Grid>
+        <Grid HorizontalAlignment="Stretch" Height="30" Margin="0,54,0,0" VerticalAlignment="Top" Width="1004">
+            <Label Content="Фильтры" HorizontalAlignment="Left" Height="30" Margin="0,0,0,0" VerticalAlignment="Top" Width="60"/>
+            <Label Content="Наименование: " HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Top" Height="30"/>
+            <Button x:Name="FilterButton" Content="Применить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" Height="30" Margin="560,0,0,0" Click="FilterButton_Click"/>
+            <TextBox x:Name="FilterTextBox" HorizontalAlignment="Left" Height="30" Margin="175,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="380"/>
+        </Grid>
+        <Button x:Name="BeginButton" Content="&lt;&lt;" HorizontalAlignment="Left" Margin="0,0,0,5" VerticalAlignment="Bottom" Width="22" Click="BeginButton_Click"/>
+        <Button x:Name="BackButton" Content="&lt;" HorizontalAlignment="Left" Margin="27,0,0,5" VerticalAlignment="Bottom" Width="24" RenderTransformOrigin="0.293,0.478" Click="BackButton_Click"/>
+        <Label x:Name="CountLabel" Content="Страница 1 из 1" HorizontalAlignment="Left" Margin="56,0,0,5" VerticalAlignment="Bottom" Width="124"/>
+        <Button x:Name="ForwardButton" Content="&gt;" HorizontalAlignment="Left" Margin="185,0,0,5" VerticalAlignment="Bottom" Width="24" Click="ForwardButton_Click"/>
+        <Button x:Name="EndButton" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="214,0,0,5" VerticalAlignment="Bottom" Width="24" Click="EndButton_Click"/>
+        <Label Content=" Показывать по" HorizontalAlignment="Left" Margin="252,0,0,5" VerticalAlignment="Bottom" Width="100"/>
+        <TextBox x:Name="CountTextBox"  PreviewTextInput="CountTextBox_PreviewTextInput" HorizontalAlignment="Left" Height="23" Margin="352,0,0,5" TextWrapping="Wrap" Text="10" VerticalAlignment="Bottom" Width="47" TextChanged="CountTextBox_TextChanged"/>
+        <Label Content="элементов" HorizontalAlignment="Left" Margin="404,0,0,5" VerticalAlignment="Bottom" Width="71"/>
+
+
+    </Grid>
+</Window>

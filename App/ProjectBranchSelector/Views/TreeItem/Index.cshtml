@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ProjectBranchSelector.Models.TreeItemModel>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<h1>List</h1>
+
+<p>
+    @Html.ActionLink("Добавить", "Create", 
+        new { },
+        new { @class = "btn btn-dark", @id = "formula_select" })
+    <a href='javascript:history.go(-1)'>Вернуться</a>
+</p>
+
+@foreach (var item in Model.Where(s => s.ParentId == null))
+{
+<li style="margin-top:4px;padding:0px;">
+    @Html.HiddenFor(m => item.Id)
+    @Html.LabelFor(m => item.Name, item.Name)
+    @Html.LabelFor(m => item.Description, item.Description)
+    @Html.ActionLink("Add", "Create",
+        new { parentId = item.Id },
+        new { @class = "btn btn-dark" })
+    @Html.ActionLink("Edit", "Edit",
+        new { parentId = item.Id },
+        new { @class = "btn btn-dark" })
+    @Html.ActionLink("Delete", "Delete",
+        new { parentId = item.Id },
+        new { @class = "btn btn-dark" })
+    <ul>
+        @Component.InvokeAsync("SelectCategories", new
+        {
+           list = Model,
+           parent = item.Id
+       })
+    </ul>
+</li>
+}
+
+

@@ -1,0 +1,27 @@
+﻿@using ProjectBranchSelector.Models;
+@model IEnumerable<TreeModel>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(s => s.Name)</th>
+            <th>@Html.DisplayNameFor(s => s.Description)</th>
+            <th>@Html.DisplayNameFor(s => s.Formula)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td>@Html.ActionLink(@item.Formula, "Details", "Formula", new { id = item.FormulaId })</td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Details", "Tree", new { id = item.Id }, new { @class = "btn btn-dark" })
+                    @Html.ActionLink("Удалить", "Delete", "Tree", new { id = item.Id }, new { @class = "btn btn-dark" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

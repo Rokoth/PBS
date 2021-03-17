@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Scripts\Новая папка\**" />
+    <EmbeddedResource Remove="Scripts\Новая папка\**" />
+    <None Remove="Scripts\Новая папка\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Deployer" Version="0.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.7" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Scripts\Check\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Deploy\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Scripts\Update\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

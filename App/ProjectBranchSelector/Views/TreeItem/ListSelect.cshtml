@@ -1,0 +1,27 @@
+﻿@model IEnumerable<ProjectBranchSelector.Models.TreeItemModel>
+
+@{
+    ViewData["Title"] = "Выбор элемента";
+}
+
+<h1>ViewData["Title"]</h1>
+
+@foreach (var item in Model.Where(s => s.ParentId == null))
+{
+<li style="margin-top:4px;padding:0px;">
+    @Html.HiddenFor(m => item.Id)
+    @Html.LabelFor(m => item.Name, item.Name)
+    @Html.LabelFor(m => item.Description, item.Description)
+    <button class="btn btn-dark select_item" onclick="SetTreeItem(item.Id, item.Name); $('#modDialog').modal('hide');">Выбрать</button>
+
+    <ul>
+        @Component.InvokeAsync("SelectCategories", new
+        {
+           list = Model,
+           parent = item.Id
+       })
+    </ul>
+</li>
+}
+
+<button class="btn btn-dark select_item" onclick="$('#modDialog').modal('hide');">Отмена</button>

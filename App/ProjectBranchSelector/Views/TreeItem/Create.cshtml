@@ -1,0 +1,80 @@
+﻿@using ProjectBranchSelector.Models;
+@model TreeItemModel
+
+@{
+    ViewData["Title"] = "Добавить";
+}
+
+
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TreeId" class="form-control" />
+            <input type="hidden" asp-for="ParentId" class="form-control" id="parent_id" />
+            <div class="form-group">
+                <label>Родитель</label>
+                <input id="parent" disabled class="form-control" />
+                <span asp-validation-for="ParentId" class="text-danger" id="parent"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Weight" class="control-label"></label>
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddFields" class="control-label"></label>
+                <input asp-for="AddFields" class="form-control" />
+                <span asp-validation-for="AddFields" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Выбрать родителя", "ListSelect", "TreeItem",
+        new { id = Model.TreeId },
+        new { @class = "btn btn-dark", @id = "parent_select" })
+    @Html.ActionLink("Вернуться", "List")
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+
+        function setParent(parent_id, parent) {
+            $("#parent_id").text(parent_id);
+            $("#parent").text(parent);
+         }
+
+            $(function () {
+                $.ajaxSetup({ cache: false });
+                $("#parent_select").click(function (e) {
+                    e.preventDefault();
+                    $.get(this.href, function (data) {
+                        $('#dialogContent').html(data);
+                        $('#modDialog').modal('show');
+                    });
+                });
+            })
+    </script>
+}

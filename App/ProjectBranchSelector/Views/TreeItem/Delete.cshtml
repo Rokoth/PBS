@@ -1,0 +1,80 @@
+﻿@model ProjectBranchSelector.Models.TreeItemModel
+
+@{
+    ViewData["Title"] = "Удаление элемента дерева";
+}
+
+<h1>Delete</h1>
+
+<h3>Вы действительно хотите удалить данный эелемент?</h3>
+<div>
+    <h4>@ViewData["Title"]</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TreeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TreeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ParentId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ParentId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IsLeaf)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IsLeaf)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AddFields)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AddFields)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SelectCount)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SelectCount)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Parent)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Parent)
+        </dd>        
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

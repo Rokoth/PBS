@@ -1,0 +1,12 @@
+﻿@model ProjectBranchSelector.Models.MessageModel
+@{
+    ViewData["Title"] = "Выбор элемента дерева";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    @Html.ActionLink("Обновить базу данных", "Deploy", "Home", null, new { @class = "btn btn-dark" })
+    @Html.ActionLink("Начать работу", "Index", "Tree", null, new { @class = "btn btn-dark" })
+
+    @Html.DisplayText(Model.Message)
+</div>

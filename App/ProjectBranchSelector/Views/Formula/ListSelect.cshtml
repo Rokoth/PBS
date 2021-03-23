@@ -36,8 +36,7 @@
                 url: "Formula/ListSelectFiltered/?page=" + (page - 1) + "&size=" + $('#count_items').val() + "&name=" + $('#filter_name').val(),
                 success: function (data, textStatus, request) {
                     $('#content').html(data);
-                    $('#all_pages').html(request.getResponseHeader('x-pages'));
-                    //alert(request.getResponseHeader('x-pages'));
+                    $('#all_pages').html(request.getResponseHeader('x-pages'));                    
                 },
                 error: function (request, textStatus, errorThrown) {
 

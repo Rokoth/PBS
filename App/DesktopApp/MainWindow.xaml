@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1024" Loaded="Window_Loaded" BorderThickness="1">
+        Title="Выбор элемента" Height="600" Width="1024" Loaded="Window_Loaded" BorderThickness="1" Icon="icons\icon.png">
     <Grid Margin="5,5,5,5">
-        <DataGrid x:Name="DataGridMain" HorizontalAlignment="Stretch" Margin="0,83,0,40" VerticalAlignment="Stretch" SelectionChanged="DataGridMain_SelectionChanged" Loaded="DataGridMain_Loaded">
+        <DataGrid x:Name="DataGridMain" HorizontalAlignment="Stretch" Margin="0,83,0,40" VerticalAlignment="Stretch" SelectionChanged="DataGridMain_SelectionChanged" Loaded="DataGridMain_Loaded" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="Name" Header="Наименование" Binding="{Binding Path=Name}"/>
                 <DataGridTextColumn x:Name="Description" Header="Описание" Binding="{Binding Path=Description}"/>
@@ -18,6 +18,7 @@
             <DataGrid.CellStyle>
                 <Style TargetType="DataGridCell">
                     <EventSetter Event="PreviewMouseDown" Handler="DataGridCell_PreviewMouseDown"/>
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridCell_MouseDoubleClick"/>
                 </Style>
             </DataGrid.CellStyle>
         </DataGrid>
@@ -41,9 +42,7 @@
                 <MenuItem x:Name="ErrorMenuItem" Header="Сообщить об ошибке" Click="ErrorMenuItem_Click"/>
             </MenuItem>
         </Menu>
-        <Button x:Name="CloseButton" Content="Закрыть" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="75" Click="CloseButton_Click"/>
-        <Button x:Name="RefreshButton" Content="Обновить" HorizontalAlignment="Right" Margin="0,0,85,5" VerticalAlignment="Bottom" Width="75" Click="RefreshButton_Click"/>
-        <Button Content="Button" HorizontalAlignment="Right" Margin="0,0,165,5" VerticalAlignment="Bottom" Width="75"/>
+        <Button x:Name="CloseButton" Content="Закрыть" HorizontalAlignment="Right" Margin="0,0,5,5" VerticalAlignment="Bottom" Width="75" Click="CloseButton_Click"/>               
         <Grid HorizontalAlignment="Stretch" Height="30" Margin="0,24,0,0" VerticalAlignment="Top" Width="1004">
             <Button x:Name="RefreshButton2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="0,0,0,0" Click="RefreshButton2_Click">
                 <StackPanel Orientation="Horizontal">
@@ -55,7 +54,16 @@
                     <Image Source="icons/add.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 </StackPanel>
             </Button>
-            <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="60,0,0,0"/>            
+            <Button x:Name="ImportButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="60,0,0,0" Click="ImportTreeMenuItem_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="icons/open.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </StackPanel>
+            </Button>
+            <Button x:Name="EditButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="90,0,0,0" Click="EditButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="icons/edit.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </StackPanel>
+            </Button>
         </Grid>
         <Grid HorizontalAlignment="Stretch" Height="30" Margin="0,54,0,0" VerticalAlignment="Top" Width="1004">
             <Label Content="Фильтры" HorizontalAlignment="Left" Height="30" Margin="0,0,0,0" VerticalAlignment="Top" Width="60"/>

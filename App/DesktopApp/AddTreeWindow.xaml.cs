@@ -21,23 +21,24 @@ namespace DesktopApp
     /// <summary>
     /// Логика взаимодействия для AddTreeWindow.xaml
     /// </summary>
-    public partial class AddTreeWindow : Window
+    public partial class TreeAddEditWindow : Window
     {
-        private AddTreeMode _mode = AddTreeMode.Simple;
+        private AddEditTreeMode _mode = AddEditTreeMode.Add;
         private IServiceProvider _serviceProvider;
         private IDataService _dataService;
         private Guid? formulaId = null;
-        private ILogger<AddTreeWindow> _logger;
+        private Guid? _id = null;
+        private ILogger<TreeAddEditWindow> _logger;
 
         public event EventHandler<ChangeTreeArgs> OnTreeAdded;
 
-        public AddTreeWindow(IServiceProvider serviceProvider)
+        public TreeAddEditWindow(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             _serviceProvider = serviceProvider;
             _dataService = _serviceProvider.GetRequiredService<IDataService>();
-            _logger = _serviceProvider.GetRequiredService<ILogger<AddTreeWindow>>();
-            GetDefaultFormula();
+            _logger = _serviceProvider.GetRequiredService<ILogger<TreeAddEditWindow>>();
+           
         }
 
         private async void GetDefaultFormula()
@@ -60,48 +61,112 @@ namespace DesktopApp
             FormulaTextBox.Text = formula.Name;
         }
 
-        public void SetMode(AddTreeMode mode)
+        public async void ShowDialog(AddEditTreeMode mode, Guid? id)
         {
             _mode = mode;
+            switch (mode)
+            {
+                case AddEditTreeMode.Add:
+                    GetDefaultFormula();
+                    break;
+                case AddEditTreeMode.Edit:
+                    _id = id;
+                    var tree = await _dataService.GetTree(_id.Value);
+                    NameTextBox.Text = tree.Name;
+                    DescriptionTextBox.Text = tree.Description;                    
+                    SetFormula(tree.FormulaId);
+                    break;
+                case AddEditTreeMode.FromFile:
+                    throw new NotImplementedException("Импорт из файла не реализован");
+                    break;
+            }
+            ShowDialog();
         }
 
         private async void SaveTree()
         {
-            if (string.IsNullOrEmpty(NameTextBox.Text))
+            switch (_mode)
             {
-                MessageBox.Show("Не задано наименование");
-            }
-            else if (formulaId == null)
-            {
-                MessageBox.Show("Не задана формула");
-            }
-            else
-            {
-                try
-                {
-                    var result = await _dataService.AddTree(new TreeCreator()
+                case AddEditTreeMode.Add:
+                    if (string.IsNullOrEmpty(NameTextBox.Text))
                     {
-                        Description = DescriptionTextBox.Text,
-                        FormulaId = formulaId.Value,
-                        Name = NameTextBox.Text
-                    });
-                    if (result == null)
-                        MessageBox.Show("Неизвестная ошибка при сохранении дерева");
+                        MessageBox.Show("Не задано наименование");
+                    }
+                    else if (formulaId == null)
+                    {
+                        MessageBox.Show("Не задана формула");
+                    }
                     else
                     {
-                        if (OnTreeAdded != null)
-                            OnTreeAdded(this, new ChangeTreeArgs()
+                        try
+                        {
+                            var result = await _dataService.AddTree(new TreeCreator()
                             {
-                                Id = result.Id
+                                Description = DescriptionTextBox.Text,
+                                FormulaId = formulaId.Value,
+                                Name = NameTextBox.Text
                             });
-                        Close();
+                            if (result == null)
+                                MessageBox.Show("Неизвестная ошибка при сохранении дерева");
+                            else
+                            {
+                                if (OnTreeAdded != null)
+                                    OnTreeAdded(this, new ChangeTreeArgs()
+                                    {
+                                        Id = result.Id
+                                    });
+                                Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError($"Ошибка при сохранении дерева: {ex.Message} {ex.StackTrace}");
+                            MessageBox.Show($"Ошибка при сохранении дерева: {ex.Message}");
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"Ошибка при сохранении дерева: {ex.Message} {ex.StackTrace}");
-                    MessageBox.Show($"Ошибка при сохранении дерева: {ex.Message}");
-                }
+                    break;
+                case AddEditTreeMode.Edit:
+                    if (string.IsNullOrEmpty(NameTextBox.Text))
+                    {
+                        MessageBox.Show("Не задано наименование");
+                    }
+                    else if (formulaId == null)
+                    {
+                        MessageBox.Show("Не задана формула");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var result = await _dataService.UpdateTree(new TreeUpdater()
+                            {
+                                Description = DescriptionTextBox.Text,
+                                FormulaId = formulaId.Value,
+                                Name = NameTextBox.Text,
+                                Id = _id.Value
+                            });
+                            if (result == null)
+                                MessageBox.Show("Неизвестная ошибка при сохранении дерева");
+                            else
+                            {
+                                if (OnTreeAdded != null)
+                                    OnTreeAdded(this, new ChangeTreeArgs()
+                                    {
+                                        Id = result.Id
+                                    });
+                                Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError($"Ошибка при сохранении дерева: {ex.Message} {ex.StackTrace}");
+                            MessageBox.Show($"Ошибка при сохранении дерева: {ex.Message}");
+                        }
+                    }
+                    break;
+                case AddEditTreeMode.FromFile:
+                    throw new NotImplementedException("Импорт из файла не реализован");
+                    break;
             }
         }
 
@@ -133,9 +198,10 @@ namespace DesktopApp
        public Guid Id { get; set; }
     }
 
-    public enum AddTreeMode
+    public enum AddEditTreeMode
     { 
-       Simple = 0,
-       FromFile = 1
+       Add = 0,
+       Edit = 1,
+       FromFile = 2
     }
 }

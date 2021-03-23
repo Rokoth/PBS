@@ -617,9 +617,55 @@ namespace ProjectBranchSelector.DesktopApp.Service
             }
         }
 
-        public TreeItemModel AddTreeItemNotSyncronized(TreeItemCreator t)
+        public TreeItemModel AddTreeItemNotSyncronized(TreeItemCreator item)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var id = Guid.NewGuid();
+                var check = repositoryTreeItem.GetAll().FirstOrDefault(s => s.Name == item.Name && s.TreeId == item.TreeId && s.ParentId == item.ParentId);
+                if (check != null)
+                    throw new DataServiceException($"Элемент с наименованием {item.Name} уже существует");
+                            
+                var result = repositoryTreeItem.Add(new TreeItem()
+                {                   
+                    Id = id,
+                    Name = item.Name,
+                    IsSync = false,
+                    VersionDate = DateTimeOffset.Now,
+                    AddFields = item.AddFields,
+                    Description = item.Description,
+                    IsDeleted = false,
+                    IsLeaf = true,
+                    ParentId = item.ParentId,
+                    SelectCount = 0,
+                    TreeId = item.TreeId,
+                    Weight = item.Weight
+                }, true);
+                if (result != null)
+                {
+                    if (item.ParentId != null)
+                    {
+                        var parent = repositoryTreeItem.Get(item.ParentId.Value);
+                        parent.IsLeaf = false;
+                        repositoryTreeItem.Update(parent, true);
+                    }
+                    return mapper.Map<TreeItemModel>(result);
+                }
+                throw new DataServiceException($"Ошибка при добавлении элемента {item.Name}");
+            }
+            catch (DatabaseException)
+            {
+                throw;
+            }
+            catch (DataServiceException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                logger.LogError($"Ошибка при добавлении элемента {item.Name}: {ex.Message} {ex.StackTrace}");
+                throw new DataServiceException($"Ошибка при добавлении элемента {item.Name}: {ex.Message}");
+            }
         }
 
         public TreeItemModel AddTreeItemSyncronized(TreeItemModel r, DateTimeOffset d)

@@ -42,7 +42,12 @@ namespace ProjectBranchSelector.DesktopApp.Service
                     (0, null), 
                     "GetTrees"), 
                 (0, null), s=>s.Item2!=null);
-        }           
+        }
+
+        internal Task<SelectResponse> SelectItem(SelectRequest selectRequest)
+        {
+            throw new NotImplementedException();
+        }
 
         public async Task<(int, IEnumerable<TreeItemModel>)> GetTreeItems(Guid id)
         {

@@ -70,9 +70,12 @@ namespace DesktopApp
             syncService.Start();
 
             Task.Factory.StartNew(RunTimer, TaskCreationOptions.LongRunning);
-
+            DataGridMain.MouseDoubleClick += EditButton_Click;
+            
              isLoaded = true;
         }
+
+        
 
         private async Task RunTimer()
         {
@@ -193,6 +196,7 @@ namespace DesktopApp
                         DataGridMain.Items.Add(item);
                     }
                 }
+                
                 CountLabel.Content = $"Страница {page + 1} из {allPages}";
             }
             catch (Exception ex)
@@ -305,8 +309,8 @@ namespace DesktopApp
         {
             if (_mode == Mode.Tree)
             {
-                var addTreeWindow = _serviceProvider.GetService<AddTreeWindow>();
-                addTreeWindow.ShowDialog();
+                var addTreeWindow = _serviceProvider.GetService<TreeAddEditWindow>();
+                addTreeWindow.ShowDialog(AddEditTreeMode.Add, null);
             }
             else
             {
@@ -318,10 +322,8 @@ namespace DesktopApp
 
         private void ImportTreeMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            var addTreeWindow = _serviceProvider.GetService<AddTreeWindow>();
-            addTreeWindow.SetMode(AddTreeMode.FromFile); 
-            addTreeWindow.ShowDialog();
-            addTreeWindow.SetMode(AddTreeMode.Simple);
+            var addTreeWindow = _serviceProvider.GetService<TreeAddEditWindow>();
+            addTreeWindow.ShowDialog(AddEditTreeMode.FromFile, null);
             FillTable();
         }
 
@@ -405,7 +407,7 @@ namespace DesktopApp
 
         private void DataGridCell_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            
+            //EditSelected();
         }
 
         private void AboutMenuItem_Click(object sender, RoutedEventArgs e)
@@ -428,6 +430,39 @@ namespace DesktopApp
         private void RefreshButton2_Click(object sender, RoutedEventArgs e)
         {
             FillTable();
+        }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditSelected();
+        }
+
+        private void EditSelected()
+        {
+            if (_mode == Mode.Tree)
+            {
+                var addTreeWindow = _serviceProvider.GetService<TreeAddEditWindow>();
+                var row = DataGridMain.SelectedItem;
+                if (row != null)
+                {
+                    addTreeWindow.ShowDialog(AddEditTreeMode.Edit, ((TreeModel)row).Id);
+                }
+            }
+            else
+            {
+                var addFormulaWindow = _serviceProvider.GetService<FormulaAddWindow>();
+                var row = DataGridMain.SelectedItem;
+                if (row != null)
+                {
+                    addFormulaWindow.ShowDialogEdit(((FormulaModel)row).Id);
+                }
+            }
+            FillTable();
+        }
+
+        private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            EditSelected();
         }
     }
 

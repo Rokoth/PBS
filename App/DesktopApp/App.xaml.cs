@@ -77,12 +77,13 @@ namespace DesktopApp
             services.AddSingleton<MainWindow>();
             services.AddTransient<ServerConnectWindow>();
             services.AddTransient<SyncConflictWindow>();
-            services.AddTransient<AddTreeWindow>();
+            services.AddTransient<TreeAddEditWindow>();
             services.AddTransient<ExportToFileWindow>();
             services.AddTransient<FormulaSelectWindow>();
             services.AddTransient<FormulaAddWindow>();
             services.AddTransient<AboutWindow>();
             services.AddTransient<ErrorReportWindow>();
+            services.AddTransient<SelectNextForm>();            
 
             services.ConfigureAutoMapper();
         }

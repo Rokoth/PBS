@@ -25,23 +25,40 @@ namespace ProjectBranchSelector.Models
 
     public class TreeHistoryModel : EntityHistoryModel
     {
+        [Display(Name = "Наименование")]
         public string Name { get; set; }
+        [Display(Name = "Описание")]
         public string Description { get; set; }
+        [HiddenInput(DisplayValue = false)]
         public Guid FormulaId { get; set; }
     }
 
     public class TreeUpdater
     {
-        public string Name { get; set; }        
+        [Display(Name = "Наименование")]
+        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Remote("CheckName", "Tree", ErrorMessage = "Name is not valid.")]
+        public string Name { get; set; }
+        [Display(Name = "Описание")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Remote("CheckFormulaId", "Tree", ErrorMessage = "FormulaId is not valid.")]
+        [HiddenInput(DisplayValue = false)]
         public Guid FormulaId { get; set; }
         public Guid Id { get; set; }
     }
 
     public class TreeCreator
     {
+        [Display(Name = "Наименование")]
+        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Remote("CheckName", "Tree", ErrorMessage = "Name is not valid.")]
         public string Name { get; set; }
+        [Display(Name = "Описание")]
         public string Description { get; set; }
+        [Required(ErrorMessage = "Поле должно быть установлено")]
+        [Remote("CheckFormulaId", "Tree", ErrorMessage = "FormulaId is not valid.")]
+        [HiddenInput(DisplayValue = false)]
         public Guid FormulaId { get; set; }
     }
 

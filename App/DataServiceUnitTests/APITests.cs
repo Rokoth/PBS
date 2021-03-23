@@ -442,5 +442,130 @@ namespace ProjectBranchSelector.DataServiceUnitTests
             Assert.NotNull(actualTree2);
             Assert.Equal(controlTree.Name, actualTree2.Name);
         }
+
+        [Fact]
+        public async Task GetTreeItemsTest()
+        {
+            var context = _serviceProvider.GetRequiredService<DbPgContext>();
+
+            var formulaId = Guid.NewGuid();
+
+            context.Formulas.Add(new Formula()
+            {
+                Id = formulaId,
+                IsDefault = true,
+                IsDeleted = false,
+                Name = $"formula_{formulaId}",
+                Text = "Min(SelectCount)",
+                VersionDate = DateTimeOffset.Now
+            });
+
+            await context.SaveChangesAsync();
+
+            var treeId = Guid.NewGuid();
+            context.Trees.Add(new Tree()
+            {
+                Description = $"tree_{treeId}_description",
+                FormulaId = formulaId,
+                Id = treeId,
+                IsDeleted = false,
+                Name = $"tree_{treeId}_name",
+                VersionDate = DateTimeOffset.Now
+            });
+
+            var treeId2 = Guid.NewGuid();
+            context.Trees.Add(new Tree()
+            {
+                Description = $"tree_{treeId2}_description",
+                FormulaId = formulaId,
+                Id = treeId2,
+                IsDeleted = false,
+                Name = $"tree_{treeId2}_name",
+                VersionDate = DateTimeOffset.Now
+            });
+
+            for (int i = 0; i < 10; i++)
+            {
+                var id = Guid.NewGuid();
+                context.TreeItems.Add(new TreeItem()
+                {
+                    Description = $"tree_item_{id}_description",                    
+                    Id = id,
+                    IsDeleted = false,
+                    Name = $"tree_item_{id}_name",
+                    VersionDate = DateTimeOffset.Now,
+                    AddFields = "{}",
+                    IsLeaf = true,
+                    ParentId = null,
+                    SelectCount = 0,
+                    TreeId = treeId,
+                    Weight = 1
+                });
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                var id = Guid.NewGuid();
+                context.TreeItems.Add(new TreeItem()
+                {
+                    Description = $"tree_item_{id}_description",
+                    Id = id,
+                    IsDeleted = false,
+                    Name = $"tree_item_{id}_name",
+                    VersionDate = DateTimeOffset.Now,
+                    AddFields = "{}",
+                    IsLeaf = true,
+                    ParentId = null,
+                    SelectCount = 0,
+                    TreeId = treeId2,
+                    Weight = 1
+                });
+            }
+
+            await context.SaveChangesAsync();
+
+            TreeApiController controller = new TreeApiController(_serviceProvider);
+
+            var result = (await controller.GetTreeItems(treeId));
+            var okResult = result as OkObjectResult;
+            Assert.NotNull(okResult);
+
+            var treeItems = okResult.Value as IEnumerable<TreeItemModel>;
+            Assert.Equal(10, treeItems.Count());
+            foreach (var treeItem in treeItems)
+            {
+                Assert.Equal(treeId, treeItem.TreeId);
+            }
+        }
+
+        [Fact]
+        public async Task GetFormulaTest()
+        {
+            var context = _serviceProvider.GetRequiredService<DbPgContext>();
+
+            var formulaId = Guid.NewGuid();
+            var control = new Formula()
+            {
+                Id = formulaId,
+                IsDefault = true,
+                IsDeleted = false,
+                Name = $"formula_{formulaId}",
+                Text = "Min(SelectCount)",
+                VersionDate = DateTimeOffset.Now
+            };
+            context.Formulas.Add(control);
+
+            await context.SaveChangesAsync();
+
+            FormulaApiController controller = new FormulaApiController(_serviceProvider);
+
+            var result = await controller.GetFormula(formulaId);
+            var okResult = result as OkObjectResult;
+            Assert.NotNull(okResult);
+
+            var actual = okResult.Value as FormulaModel;
+            Assert.Equal(control.Name, actual.Name);
+        }
+
     }
 }

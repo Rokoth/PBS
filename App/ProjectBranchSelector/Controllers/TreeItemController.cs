@@ -92,25 +92,32 @@ namespace ProjectBranchSelector.Controllers
         }
 
         // GET: Node/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(Guid id)
         {
-            return View();
+            try
+            {
+                var model = await dataService.GetTreeItem(id, cancellationToken);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", $"Method GetTreeItem exception: {ex.Message} + ST: {ex.StackTrace}");
+            }
         }
 
         // POST: Node/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(TreeItemUpdater item)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
+                var model = await dataService.UpdateTreeItem(item, cancellationToken);
+                return RedirectToAction("Details", new { id = item.Id });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Error", $"Method UpdateTreeItem exception: {ex.Message} + ST: {ex.StackTrace}");
             }
         }
 

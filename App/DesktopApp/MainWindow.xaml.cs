@@ -460,9 +460,39 @@ namespace DesktopApp
             FillTable();
         }
 
+        private async void DeleteSelected()
+        {
+            var allow = MessageBox.Show("Вы действительно хотите удалить выбранный элемент?", "Удаление", MessageBoxButton.YesNo);
+            if (allow.HasFlag(MessageBoxResult.Yes))
+            {
+                if (_mode == Mode.Tree)
+                {
+                    var row = DataGridMain.SelectedItem;
+                    if (row != null)
+                    {
+                        await _dataService.DeleteTree(((TreeModel)row).Id);
+                    }                    
+                }
+                else
+                {
+                    var row = DataGridMain.SelectedItem;
+                    if (row != null)
+                    {
+                        await _dataService.DeleteFormula(((TreeModel)row).Id);
+                    }
+                }
+                FillTable();
+            }
+        }
+
         private void DataGridCell_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             EditSelected();
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteSelected();
         }
     }
 

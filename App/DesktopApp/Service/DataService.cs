@@ -285,5 +285,10 @@ namespace ProjectBranchSelector.DesktopApp.Service
                 formulaUpdater
             );
         }
+
+        public Task DeleteFormula(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

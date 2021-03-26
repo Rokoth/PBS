@@ -22,5 +22,6 @@ namespace ProjectBranchSelector.DesktopApp.Service
         Task<FormulaModel> AddFormula(FormulaCreator formulaCreator);
         Task<TreeItemModel> DeleteTreeItem(Guid id);
         Task<FormulaModel> UpdateFormula(FormulaUpdater formulaUpdater);
+        Task DeleteFormula(Guid id);
     }
 }

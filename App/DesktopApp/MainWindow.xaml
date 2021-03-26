@@ -64,6 +64,11 @@
                     <Image Source="icons/edit.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
                 </StackPanel>
             </Button>
+            <Button x:Name="DeleteButton" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Height="30" Margin="120,0,0,0" Click="DeleteButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="icons/delete.png" Margin="0,0,0,0" Stretch="Fill" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                </StackPanel>
+            </Button>
         </Grid>
         <Grid HorizontalAlignment="Stretch" Height="30" Margin="0,54,0,0" VerticalAlignment="Top" Width="1004">
             <Label Content="Фильтры" HorizontalAlignment="Left" Height="30" Margin="0,0,0,0" VerticalAlignment="Top" Width="60"/>

@@ -183,11 +183,11 @@ namespace DesktopApp
         private void FormulaButton_Click(object sender, RoutedEventArgs e)
         {
             var formulaWindow = _serviceProvider.GetRequiredService<FormulaSelectWindow>();
-            formulaWindow.OnFormulaSelected += FormulaWindow_OnFormulaSelected;
+            formulaWindow.OnElementSelected += FormulaWindow_OnFormulaSelected;
             formulaWindow.ShowDialog();
         }
 
-        private void FormulaWindow_OnFormulaSelected(object sender, FormulaSelectedArgs e)
+        private void FormulaWindow_OnFormulaSelected(object sender, ElementSelectedArgs e)
         {
             SetFormula(e.Id);
         }

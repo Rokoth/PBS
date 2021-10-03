@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DesktopApp"
         mc:Ignorable="d"
-        Title="ErrorReportWindow" Height="450" Width="800">
+        Title="Обратная связь" Height="450" Width="800">
     <Grid>
-        
+        <TextBox x:Name="MessageTextBox"  HorizontalAlignment="Stretch" Height="277" Margin="5,106,5,35" TextWrapping="Wrap" VerticalAlignment="Stretch"/>
+        <Label Content="Описание" HorizontalAlignment="Left" Margin="5,75,0,0" VerticalAlignment="Top" Width="67"/>
+        <Label Content="Уровень" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="LevelComboBox" HorizontalAlignment="Left" Margin="90,12,0,0" VerticalAlignment="Top" Width="360">
+            <ComboBoxItem Content="Ошибка" IsSelected="True" Name="Error"/>
+            <ComboBoxItem Content="Замечание" Name="Warning"/>
+            <ComboBoxItem Content="Пожелание" Name="Issue"/>
+        </ComboBox>
+        <Label Content="Заголовок" HorizontalAlignment="Left" Margin="10,49,0,0" VerticalAlignment="Top" Width="74"/>
+        <TextBox x:Name="TitleTextBox" HorizontalAlignment="Stretch" Height="23" Margin="90,49,5,0" TextWrapping="Wrap" VerticalAlignment="Top" />
+        <Button x:Name="CancelButton" Content="Отмена" HorizontalAlignment="Right" Margin="0,388,5,0" VerticalAlignment="Top" Width="100" Click="CancelButton_Click"/>
+        <Button x:Name="SendButton" Content="Отправить" HorizontalAlignment="Right" Margin="0,388,110,0" VerticalAlignment="Top" Width="100" Click="SendButton_Click"/>
+
+
     </Grid>
 </Window>

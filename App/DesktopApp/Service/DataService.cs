@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DesktopApp;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ProjectBranchSelector.BSHttpClient;
 using ProjectBranchSelector.Common;
@@ -13,12 +14,12 @@ namespace ProjectBranchSelector.DesktopApp.Service
 {
     public class DataService : IDataService
     {
-        private readonly IBSHttpClient _httpClient;
+        private readonly IBSHttpClient<DataHttpClientSettings> _httpClient;
         private readonly IDbService _dbService;
         private readonly ILogger<DataService> _logger;
         private ClientMode clientMode;
 
-        public DataService(IBSHttpClient httpClient, IDbService dbService, ILogger<DataService> logger, IOptions<CommonOptions> options)
+        public DataService(IBSHttpClient<DataHttpClientSettings> httpClient, IDbService dbService, ILogger<DataService> logger, IOptions<CommonOptions> options)
         {
             _httpClient = httpClient;
             _dbService = dbService;

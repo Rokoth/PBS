@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ProjectBranchSelector.BSHttpClient
 {
-    public class BSHttpClient: IBSHttpClient, IDisposable
+    public class BSHttpClient<TS>: IBSHttpClient<TS>, IDisposable where TS: IHttpClientSettings
     {
-        private readonly ILogger<BSHttpClient> _logger;
+        private readonly ILogger<BSHttpClient<TS>> _logger;
         private bool isConnected = false;
         private bool isDisposed = false;
         private bool isCheckRun = false;
@@ -17,10 +18,10 @@ namespace ProjectBranchSelector.BSHttpClient
 
         public event EventHandler OnConnect;
 
-        public BSHttpClient(IHttpClientSettings settings, ILogger<BSHttpClient> logger)
+        public BSHttpClient(TS settings, IServiceProvider serviceProvider)
         {
             _apis = settings.Apis;            
-            _logger = logger;
+            _logger = serviceProvider.GetRequiredService<ILogger<BSHttpClient<TS>>>();
             if (!string.IsNullOrEmpty(settings.Server))
             {
                 _server = settings.Server;

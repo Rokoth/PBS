@@ -2,10 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Copyright>Dmitriy Rokoth</Copyright>
+    <Copyright>2021 Dmitriy Rokoth</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/Rokoth/PBS</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Rokoth/PBS</RepositoryUrl>
+    <AssemblyName>ProjectBranchSelector.CommonContract</AssemblyName>
+    <RootNamespace>ProjectBranchSelector.CommonContract</RootNamespace>
+    <Version>0.0.2</Version>
+    <Description>Contract models</Description>
+    <RepositoryType>git</RepositoryType>
+    <Authors>Dmitriy Rokoth</Authors>
+    <Company>BIR</Company>
+    <Product>ProjectBranchSelector</Product>
   </PropertyGroup>
 
   <ItemGroup>

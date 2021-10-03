@@ -40,7 +40,7 @@ namespace DesktopApp
         private readonly ISyncService syncService;
         private readonly IDbService _dbService;
         private readonly ILogger logger;
-        private readonly IBSHttpClient httpClient;
+        private readonly IBSHttpClient<DataHttpClientSettings> httpClient;
         private Mode _mode = Mode.Tree;
         private bool modeChanged = true;
 
@@ -61,7 +61,7 @@ namespace DesktopApp
             _dbService = _serviceProvider.GetRequiredService<IDbService>();
 
             logger = _serviceProvider.GetRequiredService<ILogger<MainWindow>>();
-            httpClient = _serviceProvider.GetRequiredService<IBSHttpClient>();
+            httpClient = _serviceProvider.GetRequiredService<IBSHttpClient<DataHttpClientSettings>>();
             OnError += MainWindow_OnError;
             OnServerConnected += MainWindow_OnServerConnected;
 

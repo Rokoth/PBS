@@ -6,9 +6,19 @@
     <PackageProjectUrl>https://github.com/Rokoth/PBS</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Rokoth/PBS</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Version>0.0.2</Version>
+    <Description>HttpClientWrapper</Description>
+    <Copyright>2021 Dmitriy Rokoth</Copyright>
+    <PackageId>ProjectBranchSelector.BSHttpClient</PackageId>
+    <Authors>Dmitriy Rokoth</Authors>
+    <Company>BIR</Company>
+    <Product>ProjectBranchSelector</Product>
+    <AssemblyName>ProjectBranchSelector.BSHttpClient</AssemblyName>
+    <RootNamespace>ProjectBranchSelector.BSHttpClient</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
   </ItemGroup>
 

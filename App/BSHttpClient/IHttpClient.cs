@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ProjectBranchSelector.BSHttpClient
 {
-    public interface IBSHttpClient
+    public interface IBSHttpClient<TS> where TS : IHttpClientSettings
     {
         bool IsConnected { get; }
         void ConnectToServer(string server, Action<bool, bool, string> onResult);

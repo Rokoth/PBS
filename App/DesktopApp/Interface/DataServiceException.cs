@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectBranchSelector.BSHttpClient;
+using System;
 using System.Runtime.Serialization;
 
 namespace ProjectBranchSelector.DesktopApp.Interface
@@ -21,5 +22,5 @@ namespace ProjectBranchSelector.DesktopApp.Interface
         protected DataServiceException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
-    }
+    }     
 }

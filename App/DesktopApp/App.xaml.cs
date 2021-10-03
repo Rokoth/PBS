@@ -65,15 +65,26 @@ namespace DesktopApp
             services.AddScoped<IRepository<TreeItem>, Repository<TreeItem>>();           
             services.AddScoped<IRepository<Formula>, Repository<Formula>>();
             services.AddScoped<IRepository<SyncConflict>, Repository<SyncConflict>>();
-            services.AddScoped<IBSHttpClient, BSHttpClient>();
+
+            services.AddScoped<IBSHttpClient<DataHttpClientSettings>, BSHttpClient<DataHttpClientSettings>>(
+                s=>  new BSHttpClient<DataHttpClientSettings>(new DataHttpClientSettings(
+                    config.GetValue<string>("DataServerAddress"), 
+                    config.GetValue<string>("DataServerLogin"), 
+                    config.GetValue<string>("DataServerPassword")
+                    ), s)                
+            );
+            services.AddScoped<IBSHttpClient<ReportHttpClientSettings>, BSHttpClient<ReportHttpClientSettings>>(
+                s => new BSHttpClient<ReportHttpClientSettings>(new ReportHttpClientSettings(
+                    config.GetValue<string>("ReportServerAddress"),
+                    config.GetValue<string>("ReportServerLogin"),
+                    config.GetValue<string>("ReportServerPassword")), s)
+            );
+
             services.AddScoped<IDbService, DbService>();
             services.AddScoped<IDataService, DataService>();
             services.AddSingleton<ISyncService, SyncService>();
             services.AddScoped<IFileService, FileService>();
-            services.AddScoped<IHttpClientSettings, HttpClientSettings>(s=>
-            {
-                return new HttpClientSettings(config.GetValue<string>("ServerAddress"));
-            });
+            
             services.AddSingleton<MainWindow>();
             services.AddTransient<ServerConnectWindow>();
             services.AddTransient<SyncConflictWindow>();
@@ -96,14 +107,29 @@ namespace DesktopApp
         }
     }
 
-    public class HttpClientSettings : IHttpClientSettings
+    public abstract class HttpClientSettings : IHttpClientSettings
     {
-        public HttpClientSettings(string server)
+        public HttpClientSettings(string server, string login, string password)
         {
             Server = server;
+            Login = login;
+            Password = password;
         }
 
-        public Dictionary<Type, string> Apis => new Dictionary<Type, string>()
+        public abstract Dictionary<Type, string> Apis { get; }
+        public string Server { get; private set; }
+        public string Login { get; private set; }
+        public string Password { get; private set; }
+    }
+
+    public class DataHttpClientSettings : HttpClientSettings
+    {
+        public DataHttpClientSettings(string server, string login, string password) : base(server, login, password)
+        {
+            
+        }
+
+        public override Dictionary<Type, string> Apis => new Dictionary<Type, string>()
         {
             { typeof(TreeModel), "api/v1/tree" },
             { typeof(TreeItemModel), "api/v1/tree_item" },
@@ -111,8 +137,20 @@ namespace DesktopApp
             { typeof(TreeHistoryModel), "api/v1/tree/changes" },
             { typeof(TreeItemHistoryModel), "api/v1/tree/items/changes" },
             { typeof(FormulaHistoryModel), "api/v1/formula/changes" },
+        };        
+    }
+
+    public class ReportHttpClientSettings : HttpClientSettings
+    {
+        public ReportHttpClientSettings(string server, string login, string password) : base(server, login, password)
+        {
+
+        }
+
+        public override Dictionary<Type, string> Apis => new Dictionary<Type, string>()
+        {
+            { typeof(ReportMessage), "api/v1/message" }
         };
-        public string Server { get; private set; }
     }
 
     public static class CustomExtensionMethods

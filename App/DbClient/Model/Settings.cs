@@ -19,4 +19,11 @@ namespace ProjectBranchSelector.DbClient
         public DateTimeOffset LocalVersionDate { get; set; }
         public bool LocalIsDeleted { get; set; }
     }
+
+    public class ReportMessage
+    {
+        public string Level { get; set; }
+        public string Title { get; set; }
+        public string Message { get; set; }
+    }
 }

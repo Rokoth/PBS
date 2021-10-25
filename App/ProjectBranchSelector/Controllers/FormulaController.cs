@@ -25,6 +25,22 @@ namespace ProjectBranchSelector.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Filtered(string name = null, int page = 0, int size = 10, string sort = null)
+        {
+            try
+            {
+                var result = await dataService.GetFormulas(new FormulaFilter(name, page, size, sort, true), cancellationToken);
+                var pages = (result.Item1 % size == 0) ? (result.Item1 / size) : (result.Item1 / size) + 1;
+                if (Response != null) Response.Headers.Add("x-pages", pages.ToString());
+                return PartialView(result.Item2);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Method GetFormulas exception: {ex.Message} + ST: {ex.StackTrace}");
+                return RedirectToAction("Error", $"Method GetFormulas exception: {ex.Message} + ST: {ex.StackTrace}");
+            }
+        }
+
         public ActionResult ListSelect()
         {
             return PartialView();

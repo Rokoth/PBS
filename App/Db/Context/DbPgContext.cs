@@ -14,7 +14,6 @@ namespace ProjectBranchSelector.Db.Context
         public DbSet<Tree> Trees { get; set; }
         public DbSet<TreeItem> TreeItems { get; set; }
         public DbSet<Formula> Formulas { get; set; }
-
         public DbSet<Settings> Settings { get; set; }
 
         public DbPgContext(DbContextOptions<DbPgContext> options) : base(options)

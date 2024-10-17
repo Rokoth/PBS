@@ -211,6 +211,56 @@ namespace DesktopApp
         {
             Close();
         }
+
+        private void DataGridMain_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void DataGridMain_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FilterButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BeginButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void EndButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CountTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void CountTextBox_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void CountTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+
+        }
     }
 
     public class ElementSelectedArgs

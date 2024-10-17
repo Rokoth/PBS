@@ -13,7 +13,7 @@ namespace DesktopApp.Service
 {
     public class SyncService : ISyncService, IDisposable
     {
-        private readonly IBSHttpClient _httpClient;
+        private readonly IBSHttpClient<DataHttpClientSettings> _httpClient;
         private readonly IDbService _dbService;
         private readonly ILogger<DataService> _logger;
         private readonly IRepository<Tree> _repositoryTree;
@@ -24,7 +24,7 @@ namespace DesktopApp.Service
 
         public event EventHandler OnSync;
 
-        public SyncService(IBSHttpClient httpClient, IDbService dbService, ILogger<DataService> logger
+        public SyncService(IBSHttpClient<DataHttpClientSettings> httpClient, IDbService dbService, ILogger<DataService> logger
             , IRepository<Tree> repositoryTree, IRepository<Formula> repositoryFormula, IRepository<TreeItem> repositoryTreeItem)
         {
             _httpClient = httpClient;

@@ -29,7 +29,7 @@
         <Button x:Name="ForwardButton" Content="&gt;" HorizontalAlignment="Left" Margin="185,0,0,5" VerticalAlignment="Bottom" Width="24" Click="ForwardButton_Click"/>
         <Button x:Name="EndButton" Content="&gt;&gt;" HorizontalAlignment="Left" Margin="214,0,0,5" VerticalAlignment="Bottom" Width="24" Click="EndButton_Click"/>
         <Label Content=" Показывать по" HorizontalAlignment="Left" Margin="252,0,0,5" VerticalAlignment="Bottom" Width="100"/>
-        <TextBox x:Name="CountTextBox"  PreviewTextInput="CountTextBox_PreviewTextInput" HorizontalAlignment="Left" Height="23" Margin="352,0,0,5" TextWrapping="Wrap" Text="10" VerticalAlignment="Bottom" Width="47" TextChanged="CountTextBox_TextChanged"/>
+        <TextBox x:Name="CountTextBox"  PreviewTextInput="CountTextBox_PreviewTextInput" HorizontalAlignment="Left" Height="23" Margin="352,0,0,5" TextWrapping="Wrap" Text="10" VerticalAlignment="Bottom" Width="47" TextChanged="CountTextBox_TextChanged_1"/>
         <Label Content="элементов" HorizontalAlignment="Left" Margin="404,0,0,5" VerticalAlignment="Bottom" Width="71"/>
     </Grid>
 </Window>

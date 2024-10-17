@@ -1,11 +1,12 @@
-﻿using AutoMapper;
+﻿//Copyright 2021 Dmitriy Rokoth
+//Licensed under the Apache License, Version 2.0
+//ref 1
+
+using AutoMapper;
 using ProjectBranchSelector.Common;
-using ProjectBranchSelector.Models;
 using ProjectBranchSelector.Db.Model;
+using ProjectBranchSelector.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProjectBranchSelector
 {
@@ -30,8 +31,11 @@ namespace ProjectBranchSelector
             CreateMap<FormulaUpdater, Formula>();            
 
             CreateMap<Formula, FormulaModel>();
+
             CreateMap<TreeHistory, TreeHistoryModel>();
+
             CreateMap<TreeItemHistory, TreeItemHistoryModel>();
+
             CreateMap<FormulaHistory, FormulaHistoryModel>();
         }
     }

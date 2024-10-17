@@ -159,5 +159,32 @@ namespace ProjectBranchSelector.Controllers
             var result = !check.Any();
             return Json(result);
         }
+
+        [HttpGet]
+        public async Task<JsonResult> CheckTreeId(string name, Guid treeId, Guid? parentId)
+        {
+            var check = await dataService.GetTree(treeId, cancellationToken);
+            var result = check != null;
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> CheckParentId(string name, Guid treeId, Guid? parentId)
+        {
+            if(parentId == null)
+                return Json(true);
+
+            var check = (await dataService.GetTreeItems(treeId, cancellationToken)).Item2
+                .Where(s => s.Id == parentId);
+            var result = check.Any();
+            return Json(result);
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> CheckWeight(int weight, Guid treeId, Guid? parentId)
+        {
+            var check = weight > 0;
+            return Json(check);
+        }
     }
 }

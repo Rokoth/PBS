@@ -303,8 +303,7 @@ namespace DesktopApp.Service
                         Name = item.Name,
                         Description = item.Description,
                         AddFields = item.AddFields,
-                        ParentId = item.ParentId,
-                        SelectCount = item.SelectCount,
+                        ParentId = item.ParentId,                        
                         TreeId = item.TreeId,
                         Weight = item.Weight
                     });

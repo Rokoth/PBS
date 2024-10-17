@@ -11,11 +11,4 @@ namespace ProjectBranchSelector.Models
         public Guid Id { get; set; }
         
     }
-
-    public abstract class EntityHistoryModel: EntityModel
-    {        
-        public long HId { get; set; }        
-        public DateTimeOffset ChangeDate { get; set; }
-        public bool IsDeleted { get; set; }
-    }
 }

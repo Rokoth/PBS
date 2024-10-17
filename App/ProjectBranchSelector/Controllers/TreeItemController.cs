@@ -122,25 +122,32 @@ namespace ProjectBranchSelector.Controllers
         }
 
         // GET: Node/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
-            return View();
+            try
+            {
+                var model = await dataService.GetTreeItem(id, cancellationToken);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", $"Method GetTreeItem exception: {ex.Message} + ST: {ex.StackTrace}");
+            }
         }
 
         // POST: Node/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(Guid id, TreeItemModel item)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                var model = await dataService.DeleteTreeItem(item.Id, cancellationToken);
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                return RedirectToAction("Error", $"Method DeleteTreeItem exception: {ex.Message} + ST: {ex.StackTrace}");
             }
         }
 

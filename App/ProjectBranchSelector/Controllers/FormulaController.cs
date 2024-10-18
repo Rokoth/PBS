@@ -62,9 +62,18 @@ namespace ProjectBranchSelector.Controllers
         }
 
         // GET: FormulaController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(Guid id)
         {
-            return View();
+            try
+            {
+                var model = await dataService.GetFormula(id, cancellationToken);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Method GetFormula exception: {ex.Message} + ST: {ex.StackTrace}");
+                return RedirectToAction("Error", $"Method GetFormula exception: {ex.Message} + ST: {ex.StackTrace}");
+            }
         }
 
         // GET: FormulaController/Create
